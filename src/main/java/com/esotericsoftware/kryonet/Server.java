@@ -546,6 +546,14 @@ public class Server implements EndPoint {
 			trace("kryonet", "Server thread stopped.");
 	}
 
+	/**
+	 * Starts a new thread that calls {@link #run()}.
+	 * Make sure you call a {@code bind} before starting your server.
+	 * 
+	 * @see #bind(int)
+	 * @see #bind(int, int)
+	 * @see #bind(InetSocketAddress, InetSocketAddress)
+	 */
 	@Override
 	public void start() {
 		new Thread(this, "Server").start();
