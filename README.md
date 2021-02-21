@@ -162,7 +162,7 @@ For the above examples to work, the classes that are going to be sent over the n
 
 This must be done on both the client and server, before any network communication occurs. It is very important that the exact same classes are registered on both the client and server and that they are registered in the exact same order. Because of this, typically the code that registers classes is placed in a method on a class available to both the client and server.
 
-Alternatively, Kryo can be configured to allow serialization without registering classes up front (`kryo.setRegistrationRequired(false)`). While this is useful for testing purposes, it can [pose a security risk and leads to larger packet sizes](https://github.com/EsotericSoftware/kryo#optional-registration). In addition, `kryo.setWarnUnregisteredClasses(true)` can be used to log, whenever a unregistered class is serialized.
+Alternatively, Kryo can be configured to allow serialization without registering classes up front (`kryo.setRegistrationRequired(false)`). While this is useful for testing purposes, it can [pose a security risk and leads to larger packet sizes](https://github.com/EsotericSoftware/kryo#optional-registration). In addition, `kryo.setWarnUnregisteredClasses(true)` can be used to log whenever an unregistered class is serialized.
 
 For further information on how objects are serialized for network transfer, please take a look at the [Kryo serialization library](https://github.com/EsotericSoftware/kryo). Kryo can serialize any object and supports data compression (e.g. deflate compression).
 
