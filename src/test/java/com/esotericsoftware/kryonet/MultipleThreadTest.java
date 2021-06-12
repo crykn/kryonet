@@ -21,8 +21,10 @@ package com.esotericsoftware.kryonet;
 
 import java.io.IOException;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class MultipleThreadTest extends KryoNetTestCase {
-	int receivedServer, receivedClient1, receivedClient2;
+	int receivedServer;
 
 	public void testMultipleThreads() throws IOException {
 		receivedServer = 0;

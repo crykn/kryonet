@@ -25,6 +25,8 @@ import java.io.IOException;
 
 import com.esotericsoftware.kryonet.util.InputStreamSender;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 public class InputStreamSenderTest extends KryoNetTestCase {
 	boolean success;
 

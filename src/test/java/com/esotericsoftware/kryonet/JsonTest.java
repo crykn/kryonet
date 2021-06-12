@@ -24,6 +24,9 @@ import java.util.Arrays;
 
 import com.esotericsoftware.kryonet.serialization.JsonSerialization;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
+
 public class JsonTest extends KryoNetTestCase {
 	String fail;
 
@@ -118,7 +121,7 @@ public class JsonTest extends KryoNetTestCase {
 	private void populateData(Data data, boolean isTCP) {
 		data.isTCP = isTCP;
 
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		for (int i = 0; i < 3000; i++)
 			buffer.append('a');
 		data.string = buffer.toString();
@@ -215,9 +218,7 @@ public class JsonTest extends KryoNetTestCase {
 					return false;
 			} else if (!string.equals(other.string))
 				return false;
-			if (!Arrays.equals(strings, other.strings))
-				return false;
-			return true;
+			return Arrays.equals(strings, other.strings);
 		}
 
 		public String toString() {

@@ -22,6 +22,8 @@ package com.esotericsoftware.kryonet;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 public class MultipleServerTest extends KryoNetTestCase {
 	AtomicInteger received = new AtomicInteger();
 

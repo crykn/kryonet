@@ -41,7 +41,7 @@ public class DeflateTest extends KryoNetTestCase {
 		data.text = "some text here aaaaaaaaaabbbbbbbbbbbcccccccccc";
 		data.stuff = new short[] { 1, 2, 3, 4, 5, 6, 7, 8 };
 
-		final ArrayList a = new ArrayList();
+		final ArrayList<Integer> a = new ArrayList<>();
 		a.add(12);
 		a.add(null);
 		a.add(34);
@@ -79,8 +79,8 @@ public class DeflateTest extends KryoNetTestCase {
 	static public void register(Kryo kryo) {
 		kryo.register(short[].class);
 		kryo.register(SomeData.class, new DeflateSerializer(
-				new FieldSerializer(kryo, SomeData.class)));
-		kryo.register(ArrayList.class, new CollectionSerializer());
+				new FieldSerializer<>(kryo, SomeData.class)));
+		kryo.register(ArrayList.class, new CollectionSerializer<>());
 	}
 
 	static public class SomeData {

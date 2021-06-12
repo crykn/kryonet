@@ -1,13 +1,12 @@
 package com.esotericsoftware.kryonet.listener;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.function.BiConsumer;
 
-import org.junit.Test;
-
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener.TypeListener;
+import org.junit.jupiter.api.Test;
 
 public class TypeListenerTest {
 

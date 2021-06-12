@@ -24,6 +24,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class ReconnectTest extends KryoNetTestCase {
 	public void testReconnect() throws IOException {
 		final Timer timer = new Timer();
@@ -44,12 +46,12 @@ public class ReconnectTest extends KryoNetTestCase {
 
 		// ----
 
-		final AtomicInteger reconnetCount = new AtomicInteger();
+		final AtomicInteger reconnectCount = new AtomicInteger();
 		final Client client = new Client();
 		startEndPoint(client);
 		client.addListener(new Listener() {
 			public void disconnected(Connection connection) {
-				if (reconnetCount.getAndIncrement() == 2) {
+				if (reconnectCount.getAndIncrement() == 2) {
 					stopEndPoints();
 					return;
 				}
@@ -57,7 +59,7 @@ public class ReconnectTest extends KryoNetTestCase {
 					public void run() {
 						try {
 							System.out.println(
-									"Reconnecting: " + reconnetCount.get());
+									"Reconnecting: " + reconnectCount.get());
 							client.reconnect();
 						} catch (IOException ex) {
 							ex.printStackTrace();
@@ -69,6 +71,6 @@ public class ReconnectTest extends KryoNetTestCase {
 		client.connect(5000, host, tcpPort);
 
 		waitForThreads(10000);
-		assertEquals(3, reconnetCount.getAndIncrement());
+		assertEquals(3, reconnectCount.getAndIncrement());
 	}
 }

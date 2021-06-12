@@ -20,6 +20,9 @@
 package com.esotericsoftware.kryonet;
 
 import static com.esotericsoftware.minlog.Log.info;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
+
 
 import java.io.IOException;
 import java.net.DatagramPacket;

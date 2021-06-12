@@ -23,6 +23,9 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
+
 public class UnregisteredClassTest extends KryoNetTestCase {
 	public void testUnregisteredClasses() throws IOException {
 		final Data dataTCP = new Data();
@@ -94,7 +97,7 @@ public class UnregisteredClassTest extends KryoNetTestCase {
 	private void populateData(Data data, boolean isTCP) {
 		data.isTCP = isTCP;
 
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		for (int i = 0; i < 3000; i++)
 			buffer.append('a');
 		data.string = buffer.toString();
@@ -109,8 +112,8 @@ public class UnregisteredClassTest extends KryoNetTestCase {
 				-0.3f, (float) Math.PI, Float.MAX_VALUE, Float.MIN_VALUE };
 		data.doubles = new double[] { 0, -0, 1, -1, 123456, -123456, 0.1d, 0.2d,
 				-0.3d, Math.PI, Double.MAX_VALUE, Double.MIN_VALUE };
-		data.longs = new long[] { 0, -0, 1, -1, 123456, -123456, 99999999999l,
-				-99999999999l, Long.MAX_VALUE, Long.MIN_VALUE };
+		data.longs = new long[] { 0, -0, 1, -1, 123456, -123456, 99999999999L,
+				-99999999999L, Long.MAX_VALUE, Long.MIN_VALUE };
 		data.bytes = new byte[] { -123, 123, -1, 0, 1, Byte.MAX_VALUE,
 				Byte.MIN_VALUE };
 		data.chars = new char[] { 32345, 12345, 0, 1, 63, Character.MAX_VALUE,
@@ -125,8 +128,8 @@ public class UnregisteredClassTest extends KryoNetTestCase {
 				Float.MIN_VALUE };
 		data.Doubles = new Double[] { 0d, -0d, 1d, -1d, 123456d, -123456d, 0.1d,
 				0.2d, -0.3d, Math.PI, Double.MAX_VALUE, Double.MIN_VALUE };
-		data.Longs = new Long[] { 0l, -0l, 1l, -1l, 123456l, -123456l,
-				99999999999l, -99999999999l, Long.MAX_VALUE, Long.MIN_VALUE };
+		data.Longs = new Long[] {0L, -0L, 1L, -1L, 123456L, -123456L,
+				99999999999L, -99999999999L, Long.MAX_VALUE, Long.MIN_VALUE };
 		data.Bytes = new Byte[] { -123, 123, -1, 0, 1, Byte.MAX_VALUE,
 				Byte.MIN_VALUE };
 		data.Chars = new Character[] { 32345, 12345, 0, 1, 63,
@@ -228,9 +231,7 @@ public class UnregisteredClassTest extends KryoNetTestCase {
 					return false;
 			} else if (!string.equals(other.string))
 				return false;
-			if (!Arrays.equals(strings, other.strings))
-				return false;
-			return true;
+			return Arrays.equals(strings, other.strings);
 		}
 
 		public String toString() {

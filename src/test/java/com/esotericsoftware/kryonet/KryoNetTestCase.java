@@ -27,9 +27,9 @@ import java.util.TimerTask;
 import com.esotericsoftware.minlog.Log;
 import com.esotericsoftware.minlog.Log.Logger;
 
-import junit.framework.TestCase;
+import static org.junit.jupiter.api.Assertions.fail;
 
-abstract public class KryoNetTestCase extends TestCase {
+abstract public class KryoNetTestCase {
 	static public String host = "localhost";
 	static public int tcpPort = 54555, udpPort = 54777;
 

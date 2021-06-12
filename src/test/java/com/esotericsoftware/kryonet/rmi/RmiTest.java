@@ -31,6 +31,8 @@ import com.esotericsoftware.kryonet.KryoNetTestCase;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 public class RmiTest extends KryoNetTestCase {
 	/**
 	 * In this test both the client and server have an ObjectSpace that contains
@@ -237,7 +239,7 @@ public class RmiTest extends KryoNetTestCase {
 				// Non-blocking call that errors out
 				remoteObject.setTransmitReturnValue(false);
 				test.throwException();
-				assertEquals(remoteObject.waitForLastResponse().getClass(),
+				assertSame(remoteObject.waitForLastResponse().getClass(),
 						UnsupportedOperationException.class);
 
 				// Call will time out if non-blocking isn't working properly
@@ -281,22 +283,21 @@ public class RmiTest extends KryoNetTestCase {
 		ObjectSpace.registerClasses(kryo);
 	}
 
-	public static interface TestObject {
-		public void throwException();
+	public interface TestObject {
+		void throwException();
 
-		public void moo();
+		void moo();
 
-		public void moo(String value);
+		void moo(String value);
 
-		public void moo(String value, long delay);
+		void moo(String value, long delay);
 
-		public float other();
+		float other();
 
-		public float slow();
+		float slow();
 	}
 
 	public static class TestObjectImpl implements TestObject {
-		public long value = System.currentTimeMillis();
 		private final float other;
 		public int moos;
 
