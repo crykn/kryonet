@@ -41,7 +41,7 @@ public interface ServerDiscoveryHandler {
 	 *             from the use of
 	 *             {@link DatagramChannel#send(ByteBuffer, java.net.SocketAddress)}
 	 */
-	public default boolean onDiscoverHost(DatagramChannel datagramChannel,
+	default boolean onDiscoverHost(DatagramChannel datagramChannel,
 			InetSocketAddress fromAddress) throws IOException {
 		datagramChannel.send(emptyBuffer, fromAddress);
 		return true;

@@ -60,7 +60,7 @@ import com.esotericsoftware.kryonet.serialization.Serialization;
  */
 public class Server implements EndPoint {
 	public static final int DEFAULT_WRITE_BUFFER_SIZE = 16384;
-	public static final int DEFAULT_OBJECT_BUUFER_SIZE = 2048;
+	public static final int DEFAULT_OBJECT_BUFFER_SIZE = 2048;
 
 	private final Serialization serialization;
 	private final int writeBufferSize, objectBufferSize;
@@ -69,43 +69,43 @@ public class Server implements EndPoint {
 	private ServerSocketChannel serverChannel;
 	private UdpConnection udp;
 	private Connection[] connections = {};
-	private IntMap<Connection> pendingConnections = new IntMap<>();
+	private final IntMap<Connection> pendingConnections = new IntMap<>();
 	Listener[] listeners = {};
-	private Object listenerLock = new Object();
+	private final Object listenerLock = new Object();
 	private int nextConnectionID = 1;
 	private volatile boolean shutdown;
-	private Object updateLock = new Object();
+	private final Object updateLock = new Object();
 	private Thread updateThread;
 	private ServerDiscoveryHandler discoveryHandler;
 
-	private Listener dispatchListener = new Listener() {
+	private final Listener dispatchListener = new Listener() {
 		@Override
 		public void connected(Connection connection) {
 			Listener[] listeners = Server.this.listeners;
-			for (int i = 0, n = listeners.length; i < n; i++)
-				listeners[i].connected(connection);
+			for (Listener listener : listeners)
+				listener.connected(connection);
 		}
 
 		@Override
 		public void disconnected(Connection connection) {
 			removeConnection(connection);
 			Listener[] listeners = Server.this.listeners;
-			for (int i = 0, n = listeners.length; i < n; i++)
-				listeners[i].disconnected(connection);
+			for (Listener listener : listeners)
+				listener.disconnected(connection);
 		}
 
 		@Override
 		public void received(Connection connection, Object object) {
 			Listener[] listeners = Server.this.listeners;
-			for (int i = 0, n = listeners.length; i < n; i++)
-				listeners[i].received(connection, object);
+			for (Listener listener : listeners)
+				listener.received(connection, object);
 		}
 
 		@Override
 		public void idle(Connection connection) {
 			Listener[] listeners = Server.this.listeners;
-			for (int i = 0, n = listeners.length; i < n; i++)
-				listeners[i].idle(connection);
+			for (Listener listener : listeners)
+				listener.idle(connection);
 		}
 	};
 
@@ -114,7 +114,7 @@ public class Server implements EndPoint {
 	 * object buffer size of <code>2048</code>.
 	 */
 	public Server() {
-		this(DEFAULT_WRITE_BUFFER_SIZE, DEFAULT_OBJECT_BUUFER_SIZE);
+		this(DEFAULT_WRITE_BUFFER_SIZE, DEFAULT_OBJECT_BUFFER_SIZE);
 	}
 
 	/**
@@ -147,11 +147,9 @@ public class Server implements EndPoint {
 		this(writeBufferSize, objectBufferSize, new KryoSerialization());
 	}
 
-	public Server(int writeBufferSize, int objectBufferSize,
-			Serialization serialization) {
+	public Server(int writeBufferSize, int objectBufferSize, Serialization serialization) {
 		this.writeBufferSize = writeBufferSize;
 		this.objectBufferSize = objectBufferSize;
-
 		this.serialization = serialization;
 
 		this.discoveryHandler = new ServerDiscoveryHandler() {
@@ -164,8 +162,7 @@ public class Server implements EndPoint {
 		}
 	}
 
-	public void setDiscoveryHandler(
-			ServerDiscoveryHandler newDiscoveryHandler) {
+	public void setDiscoveryHandler(ServerDiscoveryHandler newDiscoveryHandler) {
 		discoveryHandler = newDiscoveryHandler;
 	}
 

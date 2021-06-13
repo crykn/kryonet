@@ -53,8 +53,7 @@ class TcpConnection {
 	private int currentObjectLength;
 	private final Object writeLock = new Object();
 
-	public TcpConnection(Serialization serialization, int writeBufferSize,
-			int objectBufferSize) {
+	public TcpConnection(Serialization serialization, int writeBufferSize, int objectBufferSize) {
 		this.serialization = serialization;
 		writeBuffer = ByteBuffer.allocate(writeBufferSize);
 		readBuffer = ByteBuffer.allocate(objectBufferSize);
@@ -122,10 +121,7 @@ class TcpConnection {
 			lastReadTime = lastWriteTime = System.currentTimeMillis();
 		} catch (IOException ex) {
 			close();
-			IOException ioEx = new IOException(
-					"Unable to connect to: " + remoteAddress);
-			ioEx.initCause(ex);
-			throw ioEx;
+			throw new IOException("Unable to connect to: " + remoteAddress, ex);
 		}
 	}
 

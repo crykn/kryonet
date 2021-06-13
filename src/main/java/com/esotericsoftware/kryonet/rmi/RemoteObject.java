@@ -33,7 +33,7 @@ public interface RemoteObject {
 	 * Sets the milliseconds to wait for a method to return value. Default is
 	 * <code>3000</code>.
 	 */
-	public void setResponseTimeout(int timeoutMillis);
+	void setResponseTimeout(int timeoutMillis);
 
 	/**
 	 * Sets the blocking behavior when invoking a remote method. Default is
@@ -51,7 +51,7 @@ public interface RemoteObject {
 	 *            until retrieved, so each method call should have a matching
 	 *            retrieve.
 	 */
-	public void setNonBlocking(boolean nonBlocking);
+	void setNonBlocking(boolean nonBlocking);
 
 	/**
 	 * Sets whether return values are sent back when invoking a remote method.
@@ -71,7 +71,7 @@ public interface RemoteObject {
 	 *            {@link #waitForResponse(byte)} if
 	 *            {@link #setTransmitExceptions(boolean)} is <code>true</code>.
 	 */
-	public void setTransmitReturnValue(boolean transmit);
+	void setTransmitReturnValue(boolean transmit);
 
 	/**
 	 * Sets whether exceptions are sent back when invoking a remote method.
@@ -90,21 +90,21 @@ public interface RemoteObject {
 	 *            {@link #waitForLastResponse()} or
 	 *            {@link #waitForResponse(byte)}, similar to a return value.
 	 */
-	public void setTransmitExceptions(boolean transmit);
+	void setTransmitExceptions(boolean transmit);
 
 	/**
 	 * If true, UDP will be used to send the remote method invocation. UDP
 	 * remote method invocations will never return a response and the invoking
 	 * thread will not wait for a response.
 	 */
-	public void setUDP(boolean udp);
+	void setUDP(boolean udp);
 
 	/**
 	 * If set to false, calls to {@link Object#toString()} will return
 	 * {@literal "<proxy>"} instead of invoking the remote method. Default is
 	 * <code>false</code>.
 	 */
-	public void setRemoteToString(boolean remoteToString);
+	void setRemoteToString(boolean remoteToString);
 
 	/**
 	 * Waits for the response to the last method invocation to be received or
@@ -114,19 +114,19 @@ public interface RemoteObject {
 	 * @see ObjectSpace#getRemoteObject(com.esotericsoftware.kryonet.Connection,
 	 *      int, Class...)
 	 */
-	public Object waitForLastResponse();
+	Object waitForLastResponse();
 
 	/**
 	 * Returns true if the response to the last method invocation has been
 	 * received and can be retrieved using {@link #waitForLastResponse()}
 	 * without blocking.
 	 */
-	public Object hasLastResponse();
+	Object hasLastResponse();
 
 	/**
 	 * Gets the ID of response for the last method invocation.
 	 */
-	public byte getLastResponseID();
+	byte getLastResponseID();
 
 	/**
 	 * Waits for the specified method invocation response to be received or the
@@ -140,23 +140,23 @@ public interface RemoteObject {
 	 * @see ObjectSpace#getRemoteObject(com.esotericsoftware.kryonet.Connection,
 	 *      int, Class...)
 	 */
-	public Object waitForResponse(byte responseID);
+	Object waitForResponse(byte responseID);
 
 	/**
 	 * Returns true if the response to the specified method invocation has been
 	 * received and can be retrieved using {@link #waitForResponse(byte)}
 	 * without blocking.
 	 */
-	public Object hasResponse(byte responseID);
+	Object hasResponse(byte responseID);
 
 	/**
 	 * Causes this RemoteObject to stop listening to the connection for method
 	 * invocation response messages.
 	 */
-	public void close();
+	void close();
 
 	/**
 	 * Returns the local connection for this remote object.
 	 */
-	public Connection getConnection();
+	Connection getConnection();
 }

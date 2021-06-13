@@ -32,7 +32,7 @@ public interface ClientDiscoveryHandler {
 	 *
 	 * @return a new {@link DatagramPacket}
 	 */
-	public default DatagramPacket onRequestNewDatagramPacket() {
+	default DatagramPacket onRequestNewDatagramPacket() {
 		return new DatagramPacket(new byte[0], 0);
 	}
 
@@ -44,7 +44,7 @@ public interface ClientDiscoveryHandler {
 	 *            {@link #onRequestNewDatagramPacket()}, after being filled with
 	 *            the incoming packet data.
 	 */
-	public default void onDiscoveredHost(DatagramPacket datagramPacket) {
+	default void onDiscoveredHost(DatagramPacket datagramPacket) {
 		// does nothing by default
 	}
 
@@ -53,7 +53,7 @@ public interface ClientDiscoveryHandler {
 	 * {@link Client#discoverHosts(int, int)} method exits. This allows the
 	 * implementation to clean up any resources used, i.e. an {@link Input}.
 	 */
-	public default void onFinally() {
+	default void onFinally() {
 		// does nothing by default
 	}
 

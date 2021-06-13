@@ -75,8 +75,8 @@ public class Client extends Connection implements EndPoint {
 	private Selector selector;
 	private int emptySelects;
 	private volatile boolean tcpRegistered, udpRegistered;
-	private Object tcpRegistrationLock = new Object();
-	private Object udpRegistrationLock = new Object();
+	private final Object tcpRegistrationLock = new Object();
+	private final Object udpRegistrationLock = new Object();
 	private volatile boolean shutdown;
 	private final Object updateLock = new Object();
 	private Thread updateThread;

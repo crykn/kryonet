@@ -38,7 +38,7 @@ public interface EndPoint extends Runnable {
 	 * @param listener
 	 *            The listener to add. Cannot be <code>null</code>.
 	 */
-	public void addListener(Listener listener);
+	void addListener(Listener listener);
 
 	/**
 	 * Removes a previously added listener.
@@ -46,42 +46,42 @@ public interface EndPoint extends Runnable {
 	 * @param listener
 	 *            The listener to remove. Cannot be <code>null</code>.
 	 */
-	public void removeListener(Listener listener);
+	void removeListener(Listener listener);
 
 	/**
 	 * Continually updates this end point until {@link #stop()} is called.
 	 */
 	@Override
-	public void run();
+	void run();
 
 	/**
 	 * Starts a new thread that calls {@link #run()}.
 	 */
-	public void start();
+	void start();
 
 	/**
 	 * Closes this end point and causes {@link #run()} to return.
 	 */
-	public void stop();
+	void stop();
 
 	/**
 	 * @see Client
 	 * @see Server
 	 */
-	public void close();
+	void close();
 
 	/**
 	 * @see Client#update(int)
 	 * @see Server#update(int)
 	 */
-	public void update(int timeout) throws IOException;
+	void update(int timeout) throws IOException;
 
 	/**
 	 * Returns the last thread that called {@link #update(int)} for this end
 	 * point. This can be useful to detect when long running code will be run on
 	 * the update thread.
 	 */
-	public Thread getUpdateThread();
+	Thread getUpdateThread();
 
 	/**
 	 * Gets the {@linkplain Kryo} instance that will be used to serialize and
@@ -90,5 +90,5 @@ public interface EndPoint extends Runnable {
 	 * 
 	 * @return May be <code>null</code>.
 	 */
-	public Kryo getKryo();
+	Kryo getKryo();
 }

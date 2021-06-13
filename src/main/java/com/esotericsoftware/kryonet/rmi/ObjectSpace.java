@@ -420,7 +420,7 @@ public class ObjectSpace {
 		private boolean udp;
 		private Byte lastResponseID;
 		private byte nextResponseId = 1;
-		private Listener responseListener;
+		private final Listener responseListener;
 
 		final ReentrantLock lock = new ReentrantLock();
 		final Condition responseCondition = lock.newCondition();
@@ -478,56 +478,57 @@ public class ObjectSpace {
 			Class<?> declaringClass = method.getDeclaringClass();
 			if (declaringClass == RemoteObject.class) {
 				String name = method.getName();
-				if (name.equals("close")) {
-					close();
-					return null;
-				} else if (name.equals("setResponseTimeout")) {
-					timeoutMillis = (Integer) args[0];
-					return null;
-				} else if (name.equals("setNonBlocking")) {
-					nonBlocking = (Boolean) args[0];
-					return null;
-				} else if (name.equals("setTransmitReturnValue")) {
-					transmitReturnValue = (Boolean) args[0];
-					return null;
-				} else if (name.equals("setUDP")) {
-					udp = (Boolean) args[0];
-					return null;
-				} else if (name.equals("setTransmitExceptions")) {
-					transmitExceptions = (Boolean) args[0];
-					return null;
-				} else if (name.equals("setRemoteToString")) {
-					remoteToString = (Boolean) args[0];
-					return null;
-				} else if (name.equals("waitForLastResponse")) {
-					if (lastResponseID == null)
-						throw new IllegalStateException(
-								"There is no last response to wait for.");
-					return waitForResponse(lastResponseID);
-				} else if (name.equals("hasLastResponse")) {
-					if (lastResponseID == null)
-						throw new IllegalStateException(
-								"There is no last response.");
-					synchronized (this) {
-						return responseTable[lastResponseID] != null;
-					}
-				} else if (name.equals("getLastResponseID")) {
-					if (lastResponseID == null)
-						throw new IllegalStateException(
-								"There is no last response ID.");
-					return lastResponseID;
-				} else if (name.equals("waitForResponse")) {
-					if (!transmitReturnValue && !transmitExceptions
-							&& nonBlocking)
-						throw new IllegalStateException(
-								"This RemoteObject is currently set to ignore all responses.");
-					return waitForResponse((Byte) args[0]);
-				} else if (name.equals("hasResponse")) {
-					synchronized (this) {
-						return responseTable[(Byte) args[0]] != null;
-					}
-				} else if (name.equals("getConnection")) {
-					return connection;
+				switch (name) {
+					case "close":
+						close();
+						return null;
+					case "setResponseTimeout":
+						timeoutMillis = (Integer) args[0];
+						return null;
+					case "setNonBlocking":
+						nonBlocking = (Boolean) args[0];
+						return null;
+					case "setTransmitReturnValue":
+						transmitReturnValue = (Boolean) args[0];
+						return null;
+					case "setUDP":
+						udp = (Boolean) args[0];
+						return null;
+					case "setTransmitExceptions":
+						transmitExceptions = (Boolean) args[0];
+						return null;
+					case "setRemoteToString":
+						remoteToString = (Boolean) args[0];
+						return null;
+					case "waitForLastResponse":
+						if (lastResponseID == null)
+							throw new IllegalStateException(
+									"There is no last response to wait for.");
+						return waitForResponse(lastResponseID);
+					case "hasLastResponse":
+						if (lastResponseID == null)
+							throw new IllegalStateException(
+									"There is no last response.");
+						synchronized (this) {
+							return responseTable[lastResponseID] != null;
+						}
+					case "getLastResponseID":
+						if (lastResponseID == null)
+							throw new IllegalStateException(
+									"There is no last response ID.");
+						return lastResponseID;
+					case "waitForResponse":
+						if (!transmitReturnValue && !transmitExceptions
+								&& nonBlocking)
+							throw new IllegalStateException(
+									"This RemoteObject is currently set to ignore all responses.");
+						return waitForResponse((Byte) args[0]);
+					case "hasResponse":
+						synchronized (this) {
+							return responseTable[(Byte) args[0]] != null;
+						}
+					case "getConnection":
+						return connection;
 				}
 				// Should never happen, for debugging purposes only
 				throw new KryoNetException(
@@ -543,8 +544,7 @@ public class ObjectSpace {
 			CachedMethod[] cachedMethods = getMethods(
 					connection.getEndPoint().getKryo(),
 					method.getDeclaringClass());
-			for (int i = 0, n = cachedMethods.length; i < n; i++) {
-				CachedMethod cachedMethod = cachedMethods[i];
+			for (CachedMethod cachedMethod : cachedMethods) {
 				if (cachedMethod.method.equals(method)) {
 					invokeMethod.cachedMethod = cachedMethod;
 					break;
@@ -619,7 +619,7 @@ public class ObjectSpace {
 			}
 			try {
 				Object result = waitForResponse(lastResponseID);
-				if (result != null && result instanceof Exception)
+				if (result instanceof Exception)
 					throw (Exception) result;
 				else
 					return result;
@@ -770,8 +770,7 @@ public class ObjectSpace {
 		}
 		ArrayList<Method> methods = new ArrayList<>(
 				Math.max(1, allMethods.size()));
-		for (int i = 0, n = allMethods.size(); i < n; i++) {
-			Method method = allMethods.get(i);
+		for (Method method : allMethods) {
 			int modifiers = method.getModifiers();
 			if (Modifier.isStatic(modifiers))
 				continue;
@@ -854,12 +853,11 @@ public class ObjectSpace {
 	 */
 	static Object getRegisteredObject(Connection connection, int objectID) {
 		ObjectSpace[] instances = ObjectSpace.instances;
-		for (int i = 0, n = instances.length; i < n; i++) {
-			ObjectSpace objectSpace = instances[i];
+		for (ObjectSpace objectSpace : instances) {
 			// Check if the connection is in this ObjectSpace.
 			Connection[] connections = objectSpace.connections;
-			for (int j = 0; j < connections.length; j++) {
-				if (connections[j] != connection)
+			for (Connection value : connections) {
+				if (value != connection)
 					continue;
 				// Find an object with the objectID.
 				Object object = objectSpace.idToObject.get(objectID);
@@ -881,8 +879,8 @@ public class ObjectSpace {
 			ObjectSpace objectSpace = instances[i];
 			// Check if the connection is in this ObjectSpace.
 			Connection[] connections = objectSpace.connections;
-			for (int j = 0; j < connections.length; j++) {
-				if (connections[j] != connection)
+			for (Connection value : connections) {
+				if (value != connection)
 					continue;
 				// Find an ID with the object.
 				int id = objectSpace.objectToID.get(object, Integer.MAX_VALUE);

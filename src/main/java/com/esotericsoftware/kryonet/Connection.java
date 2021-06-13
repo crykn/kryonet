@@ -56,7 +56,7 @@ public class Connection {
 	UdpConnection udp;
 	InetSocketAddress udpRemoteAddress;
 	private Listener[] listeners = {};
-	private Object listenerLock = new Object();
+	private final Object listenerLock = new Object();
 	private int lastPingID;
 	private long lastPingSendTime;
 	private int returnTripTime;
@@ -276,8 +276,8 @@ public class Connection {
 		synchronized (listenerLock) {
 			Listener[] listeners = this.listeners;
 			int n = listeners.length;
-			for (int i = 0; i < n; i++)
-				if (listener == listeners[i])
+			for (Listener value : listeners)
+				if (listener == value)
 					return;
 			Listener[] newListeners = new Listener[n + 1];
 			newListeners[0] = listener;
@@ -328,20 +328,20 @@ public class Connection {
 			}
 		}
 		Listener[] listeners = this.listeners;
-		for (int i = 0, n = listeners.length; i < n; i++)
-			listeners[i].connected(this);
+		for (Listener listener : listeners)
+			listener.connected(this);
 	}
 
 	void notifyDisconnected() {
 		Listener[] listeners = this.listeners;
-		for (int i = 0, n = listeners.length; i < n; i++)
-			listeners[i].disconnected(this);
+		for (Listener listener : listeners)
+			listener.disconnected(this);
 	}
 
 	void notifyIdle() {
 		Listener[] listeners = this.listeners;
-		for (int i = 0, n = listeners.length; i < n; i++) {
-			listeners[i].idle(this);
+		for (Listener listener : listeners) {
+			listener.idle(this);
 			if (!isIdle())
 				break;
 		}
@@ -364,8 +364,8 @@ public class Connection {
 			}
 		}
 		Listener[] listeners = this.listeners;
-		for (int i = 0, n = listeners.length; i < n; i++)
-			listeners[i].received(this, object);
+		for (Listener listener : listeners)
+			listener.received(this, object);
 	}
 
 	/**
@@ -490,8 +490,6 @@ public class Connection {
 		if (getClass() != obj.getClass())
 			return false;
 		Connection other = (Connection) obj;
-		if (id != other.id)
-			return false;
-		return true;
+		return id == other.id;
 	}
 }
