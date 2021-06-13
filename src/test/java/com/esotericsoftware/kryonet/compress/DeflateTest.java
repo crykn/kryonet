@@ -31,8 +31,10 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.KryoNetTestCase;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
+import org.junit.jupiter.api.Test;
 
 public class DeflateTest extends KryoNetTestCase {
+	@Test
 	public void testDeflate() throws IOException {
 		final Server server = new Server();
 		register(server.getKryo());

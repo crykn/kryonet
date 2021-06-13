@@ -30,6 +30,7 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.KryoNetTestCase;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -40,6 +41,7 @@ public class RmiTest extends KryoNetTestCase {
 	 * client and server. The test exercises a number of remote method calls and
 	 * other features.
 	 */
+	@Test
 	public void testRMI() throws IOException {
 		Server server = new Server();
 		Kryo serverKryo = server.getKryo();
@@ -147,7 +149,7 @@ public class RmiTest extends KryoNetTestCase {
 						}
 						try {
 							Thread.sleep(300);
-						} catch (InterruptedException ex) {
+						} catch (InterruptedException ignored) {
 						}
 						((RemoteObject) test).setResponseTimeout(3000);
 						for (int i = 0; i < 256; i++)
@@ -336,7 +338,7 @@ public class RmiTest extends KryoNetTestCase {
 		public float slow() {
 			try {
 				Thread.sleep(300);
-			} catch (InterruptedException ex) {
+			} catch (InterruptedException ignored) {
 			}
 			return 666;
 		}

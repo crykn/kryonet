@@ -20,12 +20,14 @@
 package com.esotericsoftware.kryonet;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import com.esotericsoftware.minlog.Log;
 import com.esotericsoftware.minlog.Log.Logger;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -33,7 +35,7 @@ abstract public class KryoNetTestCase {
 	static public String host = "localhost";
 	static public int tcpPort = 54555, udpPort = 54777;
 
-	private ArrayList<Thread> threads = new ArrayList<>();
+	private final ArrayList<Thread> threads = new ArrayList<>();
 	ArrayList<EndPoint> endPoints = new ArrayList<>();
 	private Timer timer;
 	boolean fail;
@@ -50,12 +52,14 @@ abstract public class KryoNetTestCase {
 		});
 	}
 
-	protected void setUp() throws Exception {
+	@BeforeEach
+	protected void setUp() {
 		System.out.println("---- " + getClass().getSimpleName());
 		timer = new Timer();
 	}
 
-	protected void tearDown() throws Exception {
+	@AfterEach
+	protected void tearDown() {
 		timer.cancel();
 	}
 
@@ -99,11 +103,7 @@ abstract public class KryoNetTestCase {
 		};
 		timer.schedule(failTask, 13000);
 		while (true) {
-			for (Iterator<Thread> iter = threads.iterator(); iter.hasNext();) {
-				Thread thread = (Thread) iter.next();
-				if (!thread.isAlive())
-					iter.remove();
-			}
+			threads.removeIf(thread -> !thread.isAlive());
 			if (threads.isEmpty())
 				break;
 			try {

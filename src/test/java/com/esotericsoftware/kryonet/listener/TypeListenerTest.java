@@ -21,12 +21,7 @@ public class TypeListenerTest {
 		assertEquals(0, listener.size());
 
 		// One consumer
-		BiConsumer<Connection, String> cons1 = new BiConsumer<Connection, String>() {
-			@Override
-			public void accept(Connection t, String u) {
-				i = u;
-			}
-		};
+		BiConsumer<Connection, String> cons1 = (t, u) -> i = u;
 		listener.addTypeHandler(String.class, cons1);
 
 		listener.received(null, "test");
@@ -38,13 +33,7 @@ public class TypeListenerTest {
 		assertEquals(1, listener.size());
 
 		// Multiple Consumers
-		listener.addTypeHandler(Integer.class,
-				new BiConsumer<Connection, Integer>() {
-					@Override
-					public void accept(Connection t, Integer u) {
-						j = u;
-					}
-				});
+		listener.addTypeHandler(Integer.class, (t, u) -> j = u);
 
 		listener.received(null, 2);
 		assertEquals((Integer) 2, j);
