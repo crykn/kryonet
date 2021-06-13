@@ -19,6 +19,8 @@
 
 package com.esotericsoftware.kryonet;
 
+import org.junit.jupiter.api.Test;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -27,6 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class UnregisteredClassTest extends KryoNetTestCase {
+	@Test
 	public void testUnregisteredClasses() throws IOException {
 		final Data dataTCP = new Data();
 		populateData(dataTCP, true);

@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import com.esotericsoftware.kryo.Kryo;
+import org.junit.jupiter.api.Test;
 
 public class PingPongTest extends KryoNetTestCase {
 	String fail;
@@ -30,6 +31,7 @@ public class PingPongTest extends KryoNetTestCase {
 	int udpCount = 5500;
 	int tcpCount = 5500;
 
+	@Test
 	public void testPingPong() throws IOException {
 		fail = null;
 

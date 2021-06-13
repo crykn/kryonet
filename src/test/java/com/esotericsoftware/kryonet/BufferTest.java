@@ -23,9 +23,11 @@ import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import com.esotericsoftware.kryo.Kryo;
+import org.junit.jupiter.api.Test;
 
 public class BufferTest extends KryoNetTestCase {
 
+	@Test
 	public void testManyLargeMessages() throws IOException {
 		final int messageCount = 1024;
 		int objectBufferSize = 10250;

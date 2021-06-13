@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import com.esotericsoftware.kryonet.serialization.JsonSerialization;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -30,6 +31,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 public class JsonTest extends KryoNetTestCase {
 	String fail;
 
+	@Test
 	public void testJson() throws IOException {
 		fail = null;
 

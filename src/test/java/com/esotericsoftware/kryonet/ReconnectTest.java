@@ -19,6 +19,8 @@
 
 package com.esotericsoftware.kryonet;
 
+import org.junit.jupiter.api.Test;
+
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -27,6 +29,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ReconnectTest extends KryoNetTestCase {
+	@Test
 	public void testReconnect() throws IOException {
 		final Timer timer = new Timer();
 

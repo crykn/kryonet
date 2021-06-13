@@ -22,8 +22,10 @@ package com.esotericsoftware.kryonet;
 import java.io.IOException;
 
 import com.esotericsoftware.kryonet.FrameworkMessage.Ping;
+import org.junit.jupiter.api.Test;
 
 public class PingTest extends KryoNetTestCase {
+	@Test
 	public void testPing() throws IOException {
 		final Server server = new Server();
 		startEndPoint(server);

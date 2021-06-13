@@ -19,6 +19,8 @@
 
 package com.esotericsoftware.kryonet;
 
+import org.junit.jupiter.api.Test;
+
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -27,6 +29,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 public class MultipleServerTest extends KryoNetTestCase {
 	AtomicInteger received = new AtomicInteger();
 
+	@Test
 	public void testMultipleThreads() throws IOException {
 		final Server server1 = new Server(16384, 8192);
 		server1.getKryo().register(String[].class);

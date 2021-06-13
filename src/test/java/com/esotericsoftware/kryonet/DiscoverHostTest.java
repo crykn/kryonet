@@ -32,9 +32,11 @@ import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 
 import com.esotericsoftware.kryo.io.Input;
+import org.junit.jupiter.api.Test;
 
 public class DiscoverHostTest extends KryoNetTestCase {
 
+	@Test
 	public void testBroadcast() throws IOException {
 		// This server exists solely to reply to Client#discoverHost.
 		// It wouldn't be needed if the real server was using UDP.

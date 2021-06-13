@@ -19,11 +19,14 @@
 
 package com.esotericsoftware.kryonet;
 
+import org.junit.jupiter.api.Test;
+
 import java.io.IOException;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class KryoNetBufferUnderflowTest {
+	@Test
 	public static void main(String[] args)
 			throws IOException, InterruptedException {
 		final int port = 7000;

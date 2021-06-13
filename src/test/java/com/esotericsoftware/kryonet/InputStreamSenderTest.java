@@ -24,12 +24,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import com.esotericsoftware.kryonet.util.InputStreamSender;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class InputStreamSenderTest extends KryoNetTestCase {
 	boolean success;
 
+	@Test
 	public void testStream() throws IOException {
 		final int largeDataSize = 12345;
 
