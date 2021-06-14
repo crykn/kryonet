@@ -23,7 +23,6 @@ import static com.esotericsoftware.minlog.Log.info;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
@@ -71,6 +70,7 @@ public class DiscoverHostTest extends KryoNetTestCase {
 		waitForThreads();
 	}
 
+	@Test
 	public void testCustomBroadcast() throws IOException {
 		Client client = new Client();
 		client.getKryo().register(DiscoveryResponsePacket.class);

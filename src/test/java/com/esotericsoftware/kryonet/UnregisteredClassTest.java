@@ -131,7 +131,7 @@ public class UnregisteredClassTest extends KryoNetTestCase {
 				Float.MIN_VALUE };
 		data.Doubles = new Double[] { 0d, -0d, 1d, -1d, 123456d, -123456d, 0.1d,
 				0.2d, -0.3d, Math.PI, Double.MAX_VALUE, Double.MIN_VALUE };
-		data.Longs = new Long[] {0L, -0L, 1L, -1L, 123456L, -123456L,
+		data.Longs = new Long[] { 0L, -0L, 1L, -1L, 123456L, -123456L,
 				99999999999L, -99999999999L, Long.MAX_VALUE, Long.MIN_VALUE };
 		data.Bytes = new Byte[] { -123, 123, -1, 0, 1, Byte.MAX_VALUE,
 				Byte.MIN_VALUE };

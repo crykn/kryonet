@@ -39,7 +39,7 @@ import com.esotericsoftware.kryonet.serialization.Serialization;
  * @author Nathan Sweet <misc@n4te.com>
  */
 class TcpConnection {
-	
+
 	SocketChannel socketChannel;
 	int keepAliveMillis = 8000;
 	final ByteBuffer readBuffer, writeBuffer;
@@ -53,7 +53,8 @@ class TcpConnection {
 	private int currentObjectLength;
 	private final Object writeLock = new Object();
 
-	public TcpConnection(Serialization serialization, int writeBufferSize, int objectBufferSize) {
+	public TcpConnection(Serialization serialization, int writeBufferSize,
+			int objectBufferSize) {
 		this.serialization = serialization;
 		writeBuffer = ByteBuffer.allocate(writeBufferSize);
 		readBuffer = ByteBuffer.allocate(objectBufferSize);

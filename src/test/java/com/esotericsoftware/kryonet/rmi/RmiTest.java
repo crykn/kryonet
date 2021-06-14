@@ -101,6 +101,7 @@ public class RmiTest extends KryoNetTestCase {
 		server.close();
 	}
 
+	@Test
 	public void testMany() throws IOException {
 		Server server = new Server();
 		Kryo serverKryo = server.getKryo();

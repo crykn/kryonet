@@ -82,30 +82,30 @@ public class Server implements EndPoint {
 		@Override
 		public void connected(Connection connection) {
 			Listener[] listeners = Server.this.listeners;
-			for (Listener listener : listeners)
-				listener.connected(connection);
+			for (int i = 0, n = listeners.length; i < n; i++)
+				listeners[i].connected(connection);
 		}
 
 		@Override
 		public void disconnected(Connection connection) {
 			removeConnection(connection);
 			Listener[] listeners = Server.this.listeners;
-			for (Listener listener : listeners)
-				listener.disconnected(connection);
+			for (int i = 0, n = listeners.length; i < n; i++)
+				listeners[i].disconnected(connection);
 		}
 
 		@Override
 		public void received(Connection connection, Object object) {
 			Listener[] listeners = Server.this.listeners;
-			for (Listener listener : listeners)
-				listener.received(connection, object);
+			for (int i = 0, n = listeners.length; i < n; i++)
+				listeners[i].received(connection, object);
 		}
 
 		@Override
 		public void idle(Connection connection) {
 			Listener[] listeners = Server.this.listeners;
-			for (Listener listener : listeners)
-				listener.idle(connection);
+			for (int i = 0, n = listeners.length; i < n; i++)
+				listeners[i].idle(connection);
 		}
 	};
 
@@ -147,7 +147,8 @@ public class Server implements EndPoint {
 		this(writeBufferSize, objectBufferSize, new KryoSerialization());
 	}
 
-	public Server(int writeBufferSize, int objectBufferSize, Serialization serialization) {
+	public Server(int writeBufferSize, int objectBufferSize,
+			Serialization serialization) {
 		this.writeBufferSize = writeBufferSize;
 		this.objectBufferSize = objectBufferSize;
 		this.serialization = serialization;
@@ -162,7 +163,8 @@ public class Server implements EndPoint {
 		}
 	}
 
-	public void setDiscoveryHandler(ServerDiscoveryHandler newDiscoveryHandler) {
+	public void setDiscoveryHandler(
+			ServerDiscoveryHandler newDiscoveryHandler) {
 		discoveryHandler = newDiscoveryHandler;
 	}
 

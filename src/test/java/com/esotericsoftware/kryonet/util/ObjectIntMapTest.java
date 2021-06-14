@@ -9,7 +9,7 @@ public class ObjectIntMapTest {
 	@Test
 	public void testConstructor() {
 		assertThrows(IllegalArgumentException.class, () -> {
-				new ObjectIntMap<>(-1, 0);
+			new ObjectIntMap<>(-1, 0);
 		});
 	}
 
